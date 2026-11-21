@@ -1,0 +1,171 @@
+:root {
+  --palette-red: #B23850;
+  --palette-blue: #3B8BEB;
+  --palette-cream: #E7E3D4;
+  --palette-ice: #C4DBF6;
+  --palette-slate: #8590AA;
+  --ink: #263249;
+  --ink-muted: #586780;
+  --line: #8590AA;
+  color: var(--ink);
+  background: var(--palette-ice);
+  color-scheme: light;
+}
+
+body { color: var(--ink); background: var(--palette-ice); }
+.app-shell { color: var(--ink); background: radial-gradient(ellipse at 50% -30%, #3B8BEB2b, transparent 55%), var(--palette-ice); }
+.topbar, .checkout-card, .event-card, .profile-chip, .tier-card, .help-card, .reservation-card { color: var(--ink); background: var(--palette-cream); border-color: #8590AA88; }
+.topbar { border-bottom-color: #8590AA; box-shadow: 0 3px 15px #26324912; }
+.brand { color: var(--ink); }
+.brand-mark { color: white; background: var(--palette-red); box-shadow: 0 0 18px #B2385036; }
+.brand-dot, .event-info svg, .show-meta svg, .camera-active svg, .tier-selected .selected-check, .reservation-facts svg, .ticket-meta strong svg { color: var(--palette-red); }
+.brand small, .topbar-center, .profile-chip { color: var(--ink-muted); }
+.topbar-divider { color: var(--palette-slate); }
+.live-dot { background: var(--palette-red); box-shadow: 0 0 9px #B2385070; }
+.main-nav button { color: #66728a; }
+.main-nav button:hover, .main-nav .nav-active { color: var(--ink); }
+.main-nav .nav-active::after { background: var(--palette-red); box-shadow: 0 0 8px #B2385050; }
+.nav-count { color: white; background: var(--palette-red); }
+.profile-chip { border-color: #8590AA88; }
+.profile-avatar { color: white; background: var(--palette-blue); }
+.progress-row, .event-strip, .site-footer { border-color: #8590AA70; }
+.eyebrow, .progress-copy .eyebrow, .steps li, .step-current { color: var(--ink-muted); }
+.progress-sub { color: #657189; border-color: #8590AA; }
+.steps li.step-current { color: var(--ink); }
+.step-number { border-color: #8590AA; color: #53617b; }
+.step-done .step-number { color: white; border-color: var(--palette-blue); background: var(--palette-blue); }
+.step-current .step-number { color: white; border-color: var(--palette-red); background: var(--palette-red); box-shadow: 0 0 12px #B2385035; }
+.step-line { background: #8590AA70; }
+.strip-label > span:last-child { color: var(--ink); }
+.event-card { box-shadow: 0 4px 12px #26324912; }
+.event-card:hover { box-shadow: 0 7px 18px #26324922; }
+.event-active { border-color: var(--event-accent); box-shadow: 0 0 0 1px color-mix(in srgb, var(--event-accent) 28%, transparent), 0 6px 20px #26324920; }
+.event-info strong { color: var(--ink); }
+.event-info span { color: var(--ink-muted); }
+.event-tag { color: white; background: #263249b8; }
+.event-check { color: white; background: var(--event-accent); }
+.strip-more { color: var(--ink); background: var(--palette-cream); border-color: #8590AA88; }
+.section-heading h1, .reservations-heading h1 { color: var(--ink); }
+.accent-eyebrow { color: var(--palette-red); }
+.section-heading p, .reservations-heading p { color: var(--ink-muted); }
+.show-meta { color: var(--ink-muted); }
+.arena-wrap { border-color: #8590AA; background: var(--palette-blue); box-shadow: 0 9px 26px #26324925; }
+.arena-wrap::after { background: linear-gradient(180deg, #26324950 0%, transparent 20%, transparent 70%, #26324938 100%); }
+.arena-hud { color: white; text-shadow: 0 1px 5px #26324980; }
+.arena-hud i, .hud-live, .arena-hint { color: #E7E3D4; }
+.hud-led { background: var(--palette-red); box-shadow: 0 0 8px #B23850; }
+.hud-live::before { background: var(--palette-cream); box-shadow: 0 0 7px white; }
+.telemetry { border-color: #E7E3D4; background: #E7E3D4ed; box-shadow: 0 3px 12px #26324925; }
+.telemetry-icon { color: white; border-color: var(--palette-red); background: var(--palette-red); }
+.telemetry b { color: var(--ink); }
+.telemetry small { color: var(--ink-muted); }
+.telemetry small i { background: var(--palette-slate); }
+.camera-toggle, .angle-picker { border-color: #E7E3D4; background: #E7E3D4ed; box-shadow: 0 3px 12px #26324920; }
+.camera-toggle button { color: var(--ink-muted); }
+.camera-toggle .camera-active { color: white; background: var(--palette-red); box-shadow: none; }
+.angle-picker > span { color: var(--ink-muted); }
+.angle-picker button { color: var(--ink-muted); }
+.angle-picker .angle-active { color: white; background: var(--palette-blue); }
+.tier-heading .eyebrow { color: var(--ink); }
+.tier-hint, .tier-sort { color: var(--ink-muted); }
+.tier-legend { border-color: var(--palette-blue); background: var(--palette-blue); }
+.legend-selected { border-color: var(--palette-red); background: var(--palette-red); box-shadow: 0 0 7px #B2385050; }
+.tier-card { box-shadow: 0 2px 9px #26324910; }
+.tier-card:hover:not(:disabled) { border-color: var(--palette-blue); background: #f1eee4; }
+.tier-selected { color: var(--ink); border-color: var(--palette-red); background: #f0e2df; box-shadow: inset 0 0 0 1px #B2385035; }
+.tier-spot, .stock-label i { background: var(--palette-blue); box-shadow: 0 0 6px #3B8BEB55; }
+.tier-price, .tier-card strong { color: var(--ink); }
+.stock-label { color: var(--ink-muted); }
+.stock-low { color: var(--palette-red); }
+.stock-low i { background: var(--palette-red); box-shadow: 0 0 7px #B2385060; }
+.inventory-note { color: var(--ink-muted); }
+.status-pulse { background: var(--palette-blue); box-shadow: 0 0 7px #3B8BEB70; }
+.checkout-card { box-shadow: 0 10px 30px #26324920; }
+.checkout-topline { border-color: #8590AA70; }
+.checkout-topline .eyebrow { color: var(--ink); }
+.secure-badge { color: var(--ink-muted); }
+.secure-badge span { background: var(--palette-blue); box-shadow: 0 0 6px #3B8BEB60; }
+.checkout-show, .selected-section, .quantity-row { border-color: #8590AA70; }
+.checkout-show strong, .selected-section strong, .quantity-row strong { color: var(--ink); }
+.checkout-show span, .selected-section > div:nth-child(2) > span, .quantity-row span { color: var(--ink-muted); }
+.checkout-show svg { color: var(--palette-red); }
+.checkout-thumb { box-shadow: inset 0 0 20px #26324930; }
+.section-icon { color: white; border-color: var(--palette-blue); background: var(--palette-blue); }
+.selected-section strong i { color: var(--ink-muted); }
+.edit-section { color: var(--palette-blue); }
+.stepper { border-color: #8590AA; background: var(--palette-ice); }
+.stepper button { color: white; background: var(--palette-blue); }
+.stepper button:disabled { color: #66728a; background: #c5ccda; }
+.stepper span { color: var(--ink); }
+.field-group label { color: var(--ink-muted); }
+.input-wrap { color: var(--ink-muted); border-color: #8590AA; background: #F5F2E8; }
+.input-wrap:focus-within { border-color: var(--palette-blue); }
+.input-wrap input { color: var(--ink); }
+.input-wrap input::placeholder { color: #7d879b; }
+.input-valid { border-color: var(--palette-blue); }
+.input-error { border-color: var(--palette-red); }
+.field-check { color: var(--palette-blue); }
+.field-error { color: var(--palette-red); }
+.at-icon { color: var(--ink-muted); }
+.price-breakdown { border-color: #8590AA; }
+.price-breakdown > div { color: var(--ink-muted); }
+.price-breakdown strong { color: var(--ink); }
+.price-breakdown i { color: var(--palette-slate); }
+.price-breakdown .price-total { border-color: #8590AA; color: var(--ink); }
+.price-total strong { color: var(--ink); }
+.error-banner { color: #76283a; border-color: #B2385080; background: #f1d9dc; }
+.reserve-button { color: white; border-color: var(--accent); background: var(--accent); box-shadow: 0 4px 17px color-mix(in srgb, var(--accent) 30%, transparent); }
+.reserve-button:hover:not(:disabled) { box-shadow: 0 7px 22px color-mix(in srgb, var(--accent) 42%, transparent); }
+.checkout-assurance, .terms-copy { color: var(--ink-muted); }
+.checkout-assurance svg, .terms-copy a { color: var(--palette-blue); }
+.help-icon { color: var(--palette-blue); border-color: var(--palette-blue); }
+.help-card strong { color: var(--ink); }
+.help-card small { color: var(--ink-muted); }
+.help-card button { color: var(--palette-red); }
+.site-footer { color: var(--ink-muted); }
+.site-footer > span:first-child { color: var(--ink); }
+.site-footer i { color: var(--ink-muted); }
+.site-footer b { color: var(--palette-blue); }
+.reservation-total { color: var(--palette-red); border-color: #B2385070; background: #f0e2df; }
+.reservation-total strong { color: var(--ink); }
+.reservation-total small { color: var(--ink-muted); }
+.reservation-art { color: white; }
+.reservation-details { border-color: #8590AA; }
+.reservation-status { color: var(--ink-muted); }
+.reservation-status span:first-child { color: var(--palette-blue); }
+.reservation-details h2 { color: var(--ink); }
+.reservation-facts span { color: var(--ink-muted); }
+.reservation-bottom { border-color: #8590AA70; }
+.reservation-bottom > span, .reservation-bottom small { color: var(--ink-muted); }
+.reservation-bottom strong { color: var(--ink); }
+.reservation-qr { border-color: #8590AA; }
+.reservation-qr span { color: var(--ink-muted); }
+.reservation-actions button { color: white; border-color: var(--palette-red); background: var(--palette-red); }
+.reservation-actions .cancel-link { color: var(--palette-red); border-color: #B2385080; background: transparent; }
+.reservation-actions .cancel-link:hover { color: white; background: var(--palette-red); }
+.empty-ticket { color: white; border-color: var(--palette-blue); background: var(--palette-blue); box-shadow: 0 0 30px #3B8BEB40; }
+.empty-state h2 { color: var(--ink); }
+.empty-state p { color: var(--ink-muted); }
+.modal-backdrop { background: #263249a8; }
+.ticket-modal, .confirm-modal { color: var(--ink); border-color: var(--palette-slate); background: radial-gradient(ellipse at 50% 0%, #C4DBF6 0%, #E7E3D4 54%, #E7E3D4 100%); box-shadow: 0 25px 90px #26324955; }
+.icon-button { color: var(--ink-muted); border-color: var(--palette-slate); background: var(--palette-cream); }
+.ticket-brand, .ticket-modal h2, .confirm-modal h2 { color: var(--ink); }
+.ticket-brand i, .ticket-event-name, .ticket-reference small, .ticket-footnote, .confirm-modal p { color: var(--ink-muted); }
+.ticket-success { color: var(--palette-blue); }
+.success-orbit { color: white; border-color: var(--palette-blue); background: var(--palette-blue); box-shadow: 0 0 12px #3B8BEB40; }
+.ticket-art { border-color: #8590AA; background: radial-gradient(circle at 82% 48%, #B23850 0%, transparent 36%), radial-gradient(circle at 70% 40%, #3B8BEB 0%, transparent 48%), linear-gradient(120deg, #8590AA, #3B8BEB); }
+.ticket-art-word b, .ticket-art-date { color: white; }
+.ticket-art-code { color: #E7E3D4; }
+.ticket-meta > div > span, .ticket-reference span { color: var(--ink-muted); }
+.ticket-meta strong { color: var(--ink); }
+.ticket-stub { border-color: var(--palette-slate); background: #F5F2E8; }
+.ticket-reference strong { color: var(--palette-red); }
+.ticket-footnote svg { color: var(--palette-blue); }
+.confirm-icon { color: white; border-color: var(--palette-red); background: var(--palette-red); }
+.secondary-button { color: var(--ink); border-color: var(--palette-slate); background: var(--palette-cream); }
+.danger-button { color: white; border-color: var(--palette-red); background: var(--palette-red); }
+.danger-button:hover { background: #962b43; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
