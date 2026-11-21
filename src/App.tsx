@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Armchair, ArrowDownRight, ArrowUpRight, BadgeCheck, CalendarDays, Check, CheckCircle2, ChevronDown, ChevronRight, CircleAlert, Clock3, Compass, CreditCard, Eye, MapPin, Minus, Plus, QrCode, RotateCcw, Ticket, Trash2, UserRound, UsersRound, X } from 'lucide-react'
+import { Armchair, ArrowDownRight, ArrowUpRight, BadgeCheck, CalendarDays, Check, CheckCircle2, ChevronDown, ChevronRight, CircleAlert, Clock3, Compass, CreditCard, Eye, MapPin, Minus, Plus, Printer, QrCode, RotateCcw, Ticket, Trash2, UserRound, UsersRound, X } from 'lucide-react'
 import QRCode from 'qrcode'
 import Arena3DViewer from './Arena3DViewer'
 import { formatPeso, initialConcerts } from './data'
@@ -76,23 +76,40 @@ function QRGraphic({ value, small = false }: { value: string; small?: boolean })
 function TicketModal({ reservation, onClose }: { reservation: Reservation; onClose: () => void }) {
   return <div className="modal-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose() }}>
     <section className="ticket-modal" role="dialog" aria-modal="true" aria-labelledby="ticket-title">
-      <button className="icon-button modal-close" onClick={onClose} aria-label="Close ticket"><X size={18} /></button>
-      <div className="ticket-brand"><span className="brand-mark mini-mark">P</span><span>PULSETIX <i>LIVE ACCESS</i></span></div>
-      <div className="ticket-success"><span className="success-orbit"><Check size={21} /></span><span>YOU’RE ON THE LIST</span></div>
-      <h2 id="ticket-title">Your night starts here.</h2>
-      <p className="ticket-event-name">{reservation.concertName}</p>
-      <div className="ticket-art"><span className="ticket-art-glow" /><span className="ticket-art-word">LIVE<br /><b>LOUD.</b></span><span className="ticket-art-date">{reservation.date.split(' · ')[0]}</span><span className="ticket-art-code">PTX&nbsp; / &nbsp;2026</span></div>
-      <div className="ticket-meta">
-        <div><span>ATTENDEE</span><strong><UserRound size={14} /> {reservation.name}</strong></div>
-        <div><span>SECTION</span><strong><Armchair size={14} /> {reservation.tierName} · {reservation.section}</strong></div>
-        <div><span>ADMIT</span><strong><UsersRound size={14} /> {reservation.quantity} {reservation.quantity === 1 ? 'GUEST' : 'GUESTS'}</strong></div>
-        <div><span>PAID</span><strong className="tabular-nums">{formatPeso(reservation.total)}</strong></div>
+      <header className="ticket-header">
+        <div className="ticket-brand"><span className="brand-mark mini-mark">P</span><span>PULSETIX <i>LIVE ACCESS</i></span></div>
+        <span className="ticket-type"><Ticket size={13} /> PRINT READY E-TICKET</span>
+        <button className="icon-button modal-close" onClick={onClose} aria-label="Close ticket"><X size={18} /></button>
+      </header>
+      <div className="ticket-intro">
+        <div className="ticket-success"><span className="success-orbit"><Check size={17} /></span><span>RESERVATION CONFIRMED</span></div>
+        <h2 id="ticket-title">Your night starts here.</h2>
+        <p className="ticket-event-name">{reservation.concertName}</p>
       </div>
-      <div className="ticket-stub">
-        <div className="ticket-reference"><span>BOOKING REFERENCE</span><strong>{reservation.id}</strong><small>{reservation.date} · {reservation.venue}</small></div>
-        <QRGraphic value={reservation.id} />
+      <div className="ticket-content">
+        <div className="ticket-main">
+          <div className="ticket-art">
+            <span className="ticket-art-glow" />
+            <span className="ticket-art-word">LIVE<br /><b>LOUD.</b></span>
+            <div className="ticket-art-details"><span><CalendarDays size={13} /> {reservation.date}</span><span><MapPin size={13} /> {reservation.venue}</span></div>
+            <span className="ticket-art-code">PULSETIX&nbsp; / &nbsp;LIVE ACCESS</span>
+          </div>
+          <div className="ticket-meta">
+            <div><span>ATTENDEE</span><strong><UserRound size={15} /> {reservation.name}</strong></div>
+            <div><span>SECTION</span><strong><Armchair size={15} /> {reservation.tierName} · {reservation.section}</strong></div>
+            <div><span>ADMIT</span><strong><UsersRound size={15} /> {reservation.quantity} {reservation.quantity === 1 ? 'GUEST' : 'GUESTS'}</strong></div>
+            <div><span>TOTAL PAID</span><strong className="tabular-nums">{formatPeso(reservation.total)}</strong></div>
+          </div>
+        </div>
+        <aside className="ticket-stub">
+          <div className="ticket-reference"><span>BOOKING REFERENCE</span><strong>{reservation.id}</strong><small>Show this code at the gate</small></div>
+          <div className="ticket-qr-block"><QRGraphic value={reservation.id} /><span>SCAN AT ENTRY</span></div>
+        </aside>
       </div>
-      <p className="ticket-footnote"><BadgeCheck size={14} /> Keep this pass ready at the gate. Screenshot for offline access.</p>
+      <footer className="ticket-footer">
+        <p className="ticket-footnote"><BadgeCheck size={15} /> Keep your pass ready at the gate. Print or save a copy for offline access.</p>
+        <button className="ticket-print-button" onClick={() => window.print()}><Printer size={15} /> Print ticket</button>
+      </footer>
     </section>
   </div>
 }
