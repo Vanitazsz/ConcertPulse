@@ -8,10 +8,14 @@ import type { Concert, Reservation, Tier, TierId } from './types'
 const STORAGE_KEY = 'pulsetix-state-v1'
 const SERVICE_FEE = 150
 const eventPalette: Record<string, { accent: string; secondary: string }> = {
-  bini: { accent: '#B23850', secondary: '#3B8BEB' },
-  niki: { accent: '#3B8BEB', secondary: '#8590AA' },
-  benandben: { accent: '#8590AA', secondary: '#B23850' },
+  bini: { accent: '#F76C6C', secondary: '#F8E9A1' },
+  niki: { accent: '#A8D0E6', secondary: '#374785' },
+  benandben: { accent: '#F8E9A1', secondary: '#F76C6C' },
+  coldplay: { accent: '#F76C6C', secondary: '#A8D0E6' },
+  chaseatlantic: { accent: '#A8D0E6', secondary: '#F76C6C' },
+  'wave-to-earth': { accent: '#F8E9A1', secondary: '#A8D0E6' },
 }
+const retiredConcertIds = new Set(['bini'])
 
 function readSaved() {
   try {
@@ -94,8 +98,9 @@ function TicketModal({ reservation, onClose }: { reservation: Reservation; onClo
 }
 
 function EventCard({ concert, active, onClick }: { concert: Concert; active: boolean; onClick: () => void }) {
+  const logoClass = concert.id === 'chaseatlantic' ? 'artist-compact' : concert.id === 'wave-to-earth' ? 'artist-wave' : ''
   return <button className={`event-card ${active ? 'event-active' : ''}`} onClick={onClick} style={{ '--event-accent': concert.accent, '--event-secondary': concert.secondary } as React.CSSProperties}>
-    <div className="event-visual"><span className="event-scanlines" /><span className="event-orb" /><span className="event-artist">{concert.artist}</span><span className="event-tag">{concert.tag}</span></div>
+    <div className="event-visual"><span className="event-scanlines" /><span className="event-orb" /><span className={`event-artist ${logoClass}`}>{concert.id === 'chaseatlantic' ? <>CHASE<br />ATLANTIC</> : concert.id === 'wave-to-earth' ? <>wave to<br />earth</> : concert.artist}</span><span className="event-tag">{concert.tag}</span></div>
     <div className="event-info"><strong>{concert.title}</strong><span><CalendarDays size={12} /> {concert.date}</span><span><MapPin size={12} /> {concert.venue}</span></div>
     {active && <span className="event-check"><Check size={12} /></span>}
   </button>
@@ -110,7 +115,7 @@ export default function App() {
   const saved = useMemo(readSaved, [])
   const [concerts, setConcerts] = useState<Concert[]>(saved.concerts)
   const [reservations, setReservations] = useState<Reservation[]>(saved.reservations)
-  const [concertId, setConcertId] = useState(saved.concerts[0]?.id ?? 'bini')
+  const [concertId, setConcertId] = useState(saved.concerts.find((item) => !retiredConcertIds.has(item.id))?.id ?? saved.concerts[0]?.id ?? 'niki')
   const [selectedTier, setSelectedTier] = useState<TierId>('lower-center')
   const [tab, setTab] = useState<'book' | 'reservations'>('book')
   const [mode, setMode] = useState<'overview' | 'pov'>('overview')
@@ -126,7 +131,8 @@ export default function App() {
 
   useEffect(() => { localStorage.setItem(STORAGE_KEY, JSON.stringify({ concerts, reservations })) }, [concerts, reservations])
 
-  const concert = concerts.find((item) => item.id === concertId) ?? concerts[0]
+  const selectableConcerts = concerts.filter((item) => !retiredConcertIds.has(item.id))
+  const concert = concerts.find((item) => item.id === concertId) ?? selectableConcerts[0] ?? concerts[0]
   const tier = concert.tiers.find((item) => item.id === selectedTier) ?? concert.tiers[0]
   const displayTierId = hoveredTier ?? selectedTier
   const displayTier = concert.tiers.find((item) => item.id === displayTierId) ?? tier
@@ -202,7 +208,7 @@ export default function App() {
 
       <section className="event-strip" aria-label="Choose a concert">
         <div className="strip-label"><span className="eyebrow">ON THE BILL</span><span>Pick your next<br />core memory.</span></div>
-        <div className="events-row">{concerts.map((item) => <EventCard key={item.id} concert={item} active={concert.id === item.id} onClick={() => changeConcert(item.id)} />)}</div>
+        <div className="events-row">{selectableConcerts.map((item) => <EventCard key={item.id} concert={item} active={concert.id === item.id} onClick={() => changeConcert(item.id)} />)}</div>
         <div className="strip-more" aria-hidden="true"><ChevronRight size={18} /></div>
       </section>
 
@@ -211,7 +217,7 @@ export default function App() {
           <div className="section-heading"><div><span className="eyebrow accent-eyebrow"><span className="live-dot" /> LIVE SEAT FINDER</span><h1>Find your <em>frequency.</em></h1><p>Pick a section. Feel the room. Find your spot.</p></div><div className="show-meta"><span><CalendarDays size={14} /> {concert.date}</span><span><MapPin size={14} /> {concert.venue}</span></div></div>
           <div className="arena-wrap">
             <div className="arena-hud"><span className="hud-led" /><span>VIEWFINDER <i>/</i> {mode === 'overview' ? 'ARENA OVERVIEW' : 'SEAT POV'}</span><span className="hud-live">LIVE RENDER</span></div>
-            <Arena3DViewer tiers={concert.tiers} selected={selectedTier} accent={concert.accent} mode={mode} angle={angle} onSelect={chooseTier} onHover={setHoveredTier} />
+            <Arena3DViewer tiers={concert.tiers} selected={selectedTier} accent={concert.accent} secondary={concert.secondary} mode={mode} angle={angle} onSelect={chooseTier} onHover={setHoveredTier} />
             <div className="telemetry"><span className="telemetry-icon"><Eye size={14} /></span><span><b>POV: {displayTier.name} {displayTier.section === 'Center' ? 'Center' : `· ${displayTier.section}`}</b><small><span><ArrowDownRight size={11} /> ~{Math.round(Math.sqrt((displayTier.position[0]) ** 2 + (displayTier.position[2] + 12) ** 2))}m to stage</span><i />{displayTier.elevation}<i />Clear sightline</small></span></div>
             <div className="camera-toggle"><button className={mode === 'overview' ? 'camera-active' : ''} onClick={() => setMode('overview')}><Compass size={14} /> Arena overview</button><button className={mode === 'pov' ? 'camera-active' : ''} onClick={() => setMode('pov')}><Eye size={14} /> Seat POV</button></div>
             {mode === 'pov' && <div className="angle-picker"><span>COMPARE ANGLE</span>{(['left', 'center', 'right'] as const).map((position) => <button key={position} className={angle === position ? 'angle-active' : ''} onClick={() => setAngle(position)}>{position === 'left' ? 'Left wing' : position === 'center' ? 'Center stage' : 'Right wing'}</button>)}</div>}
@@ -245,7 +251,7 @@ export default function App() {
       </section> : <section className="reservations-page">
         <div className="reservations-heading"><div><span className="eyebrow accent-eyebrow"><span className="live-dot" /> YOUR PULSETIX</span><h1>The nights you’ve <em>locked in.</em></h1><p>Your passes are ready when you are. Bring the QR code to the gate.</p></div><div className="reservation-total"><Ticket size={17} /><span><strong>{totalTickets}</strong><small>CONFIRMED TICKETS</small></span></div></div>
         {reservations.length === 0 ? <div className="empty-state"><div className="empty-ticket"><Ticket size={32} /></div><span className="eyebrow">NOTHING ON THE CALENDAR (YET)</span><h2>Big nights are waiting.</h2><p>Once you reserve a show, your e-tickets will live here.</p><button className="reserve-button" onClick={() => setTab('book')}>Explore upcoming shows <ArrowUpRight size={16} /></button></div> : <div className="reservation-list">{reservations.map((reservation) => <article className="reservation-card" key={reservation.id}>
-          <div className="reservation-art" style={{ '--ticket-accent': concerts.find((item) => item.id === reservation.concertId)?.accent ?? '#d946ef' } as React.CSSProperties}><span>LIVE<br /><b>LOUD.</b></span><small>PTX / 2026</small></div>
+          <div className="reservation-art" style={{ '--ticket-accent': concerts.find((item) => item.id === reservation.concertId)?.accent ?? '#F76C6C' } as React.CSSProperties}><span>LIVE<br /><b>LOUD.</b></span><small>PTX / 2026</small></div>
           <div className="reservation-details"><div className="reservation-status"><span><span className="live-dot" /> CONFIRMED</span><span>REF. {reservation.id}</span></div><h2>{reservation.concertName}</h2><div className="reservation-facts"><span><CalendarDays size={14} /> {reservation.date}</span><span><MapPin size={14} /> {reservation.venue}</span><span><Armchair size={14} /> {reservation.tierName} · {reservation.section}</span><span><UsersRound size={14} /> {reservation.quantity} {reservation.quantity === 1 ? 'ticket' : 'tickets'}</span></div><div className="reservation-bottom"><span>PAID <strong className="tabular-nums">{formatPeso(reservation.total)}</strong></span><small>Booked for {reservation.name}</small></div></div>
           <div className="reservation-qr"><QRGraphic value={reservation.id} small /><span>SCAN AT GATE</span></div>
           <div className="reservation-actions"><button onClick={() => setActiveTicket(reservation)}><QrCode size={14} /> Open pass</button><button className="cancel-link" onClick={() => setCancelId(reservation.id)}><Trash2 size={14} /> Cancel</button></div>

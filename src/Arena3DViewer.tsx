@@ -6,26 +6,25 @@ interface Props {
   tiers: Tier[]
   selected: TierId
   accent: string
+  secondary: string
   mode: 'overview' | 'pov'
   angle: 'left' | 'center' | 'right'
   onSelect: (id: TierId) => void
   onHover: (id: TierId | null) => void
 }
 
-const seatColors = ['#B23850', '#3B8BEB', '#8590AA', '#E7E3D4']
-
-export default function Arena3DViewer({ tiers, selected, accent, mode, angle, onSelect, onHover }: Props) {
+export default function Arena3DViewer({ tiers, selected, accent, secondary, mode, angle, onSelect, onHover }: Props) {
   const mountRef = useRef<HTMLDivElement>(null)
   const sceneState = useRef<{ camera: THREE.PerspectiveCamera; zones: Map<TierId, THREE.Mesh[]>; renderer: THREE.WebGLRenderer; scene: THREE.Scene } | null>(null)
-  const controlRef = useRef({ selected, mode, angle, accent, onSelect, onHover })
-  controlRef.current = { selected, mode, angle, accent, onSelect, onHover }
+  const controlRef = useRef({ selected, mode, angle, accent, secondary, onSelect, onHover })
+  controlRef.current = { selected, mode, angle, accent, secondary, onSelect, onHover }
 
   useEffect(() => {
     const mount = mountRef.current
     if (!mount) return
     const scene = new THREE.Scene()
-    scene.background = new THREE.Color('#3B8BEB')
-    scene.fog = new THREE.FogExp2('#3B8BEB', 0.012)
+    scene.background = new THREE.Color('#151A36')
+    scene.fog = new THREE.FogExp2('#151A36', 0.012)
     const camera = new THREE.PerspectiveCamera(44, 1, 0.1, 180)
     camera.position.set(24, 25, 33)
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false })
@@ -38,7 +37,7 @@ export default function Arena3DViewer({ tiers, selected, accent, mode, angle, on
     renderer.shadowMap.type = THREE.PCFShadowMap
     mount.appendChild(renderer.domElement)
 
-    scene.add(new THREE.HemisphereLight('#E7E3D4', '#8590AA', 2.0))
+    scene.add(new THREE.HemisphereLight('#A8D0E6', '#24305E', 2.0))
     const key = new THREE.DirectionalLight('#ffffff', 3.1)
     key.position.set(-7, 22, 8)
     key.castShadow = true
@@ -47,22 +46,22 @@ export default function Arena3DViewer({ tiers, selected, accent, mode, angle, on
     const stageGlow = new THREE.PointLight(accent, 80, 36, 1.8)
     stageGlow.position.set(0, 6, -12)
     scene.add(stageGlow)
-    const cyanGlow = new THREE.PointLight('#C4DBF6', 28, 24, 2)
+    const cyanGlow = new THREE.PointLight(secondary, 28, 24, 2)
     cyanGlow.position.set(0, 8, 1)
     scene.add(cyanGlow)
 
-    const floor = new THREE.Mesh(new THREE.PlaneGeometry(60, 52), new THREE.MeshStandardMaterial({ color: '#8590AA', roughness: 0.8, metalness: 0.15 }))
+    const floor = new THREE.Mesh(new THREE.PlaneGeometry(60, 52), new THREE.MeshStandardMaterial({ color: '#24305E', roughness: 0.8, metalness: 0.25 }))
     floor.rotation.x = -Math.PI / 2
     floor.position.set(0, -0.15, 4)
     floor.receiveShadow = true
     scene.add(floor)
 
-    const stage = new THREE.Mesh(new THREE.BoxGeometry(12, 0.8, 4.2), new THREE.MeshStandardMaterial({ color: '#B23850', roughness: 0.42, metalness: 0.25 }))
+    const stage = new THREE.Mesh(new THREE.BoxGeometry(12, 0.8, 4.2), new THREE.MeshStandardMaterial({ color: '#374785', roughness: 0.42, metalness: 0.4 }))
     stage.position.set(0, 0.25, -12)
     stage.receiveShadow = true
     stage.castShadow = true
     scene.add(stage)
-    const thrust = new THREE.Mesh(new THREE.BoxGeometry(4.2, 0.35, 7.8), new THREE.MeshStandardMaterial({ color: '#E7E3D4', roughness: 0.42, metalness: 0.12 }))
+    const thrust = new THREE.Mesh(new THREE.BoxGeometry(4.2, 0.35, 7.8), new THREE.MeshStandardMaterial({ color: '#374785', roughness: 0.42, metalness: 0.25 }))
     thrust.position.set(0, 0.1, -6.9)
     thrust.receiveShadow = true
     scene.add(thrust)
@@ -70,7 +69,7 @@ export default function Arena3DViewer({ tiers, selected, accent, mode, angle, on
     const led = new THREE.Mesh(new THREE.BoxGeometry(10.4, 5.1, 0.28), ledMat)
     led.position.set(0, 4.4, -14.05)
     scene.add(led)
-    const trussMat = new THREE.MeshStandardMaterial({ color: '#8590AA', metalness: 0.3, roughness: 0.4 })
+    const trussMat = new THREE.MeshStandardMaterial({ color: '#374785', metalness: 0.3, roughness: 0.4 })
     const truss = new THREE.Mesh(new THREE.BoxGeometry(13.6, 0.16, 0.2), trussMat)
     truss.position.set(0, 8, -13.6)
     scene.add(truss)
@@ -86,6 +85,7 @@ export default function Arena3DViewer({ tiers, selected, accent, mode, angle, on
 
     // Procedural seating blocks make each section individually raycastable.
     const zones = new Map<TierId, THREE.Mesh[]>()
+    const seatColors = [accent, secondary, '#374785', '#A8D0E6']
     tiers.forEach((tier, index) => {
       const [x, y, z] = tier.position
       const isPit = tier.id === 'svip'
@@ -106,7 +106,7 @@ export default function Arena3DViewer({ tiers, selected, accent, mode, angle, on
       if (isBox || isGa) {
         const rows = isGa ? 5 : 4
         const cols = isGa ? 15 : 8
-        const seatMat = new THREE.MeshStandardMaterial({ color: '#E7E3D4', roughness: 0.72, metalness: 0.04 })
+        const seatMat = new THREE.MeshStandardMaterial({ color: '#A8D0E6', roughness: 0.72, metalness: 0.08 })
         for (let row = 0; row < rows; row++) {
           for (let col = 0; col < cols; col++) {
             const seat = new THREE.Mesh(new THREE.BoxGeometry(isGa ? 0.68 : 0.62, 0.36, 0.52), seatMat)
@@ -133,7 +133,7 @@ export default function Arena3DViewer({ tiers, selected, accent, mode, angle, on
     })
 
     // Concentric roof arcs frame the bowl without external assets.
-    const rimMat = new THREE.MeshStandardMaterial({ color: '#8590AA', metalness: 0.22, roughness: 0.45 })
+    const rimMat = new THREE.MeshStandardMaterial({ color: '#374785', metalness: 0.35, roughness: 0.45 })
     for (let radius = 16; radius <= 25; radius += 4) {
       const arc = new THREE.Mesh(new THREE.TorusGeometry(radius, 0.11, 5, 90, Math.PI), rimMat)
       arc.rotation.x = Math.PI / 2
@@ -142,7 +142,7 @@ export default function Arena3DViewer({ tiers, selected, accent, mode, angle, on
     }
     for (let i = 0; i < 28; i++) {
       const a = (i / 28) * Math.PI
-      const dot = new THREE.Mesh(new THREE.SphereGeometry(0.12, 8, 6), new THREE.MeshBasicMaterial({ color: i % 3 === 0 ? '#C4DBF6' : '#B23850' }))
+      const dot = new THREE.Mesh(new THREE.SphereGeometry(0.12, 8, 6), new THREE.MeshBasicMaterial({ color: i % 3 === 0 ? secondary : accent }))
       dot.position.set(Math.cos(a) * 22, 7.8, 5 + Math.sin(a) * 13)
       scene.add(dot)
     }
@@ -268,7 +268,7 @@ export default function Arena3DViewer({ tiers, selected, accent, mode, angle, on
       if (mount.contains(renderer.domElement)) mount.removeChild(renderer.domElement)
       sceneState.current = null
     }
-  }, [tiers])
+  }, [tiers, accent, secondary])
 
   return <div ref={mountRef} className="arena-canvas" aria-label="Interactive 3D concert arena. Click a seating section to select it." />
 }

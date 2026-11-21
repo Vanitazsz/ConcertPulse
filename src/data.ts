@@ -13,13 +13,19 @@ const makeTiers = (modifier = 0): Tier[] => [
 
 export const initialConcerts: Concert[] = [
   {
-    id: 'bini', artist: 'BINI', title: 'Grand BINIverse: The Encore', date: 'SAT, DEC 12 2026 · 7:30 PM', venue: 'Philippine Arena · Bulacan', doors: 'Doors open 5:00 PM', accent: '#B23850', secondary: '#3B8BEB', tag: 'SELLING FAST', tiers: makeTiers(),
+    id: 'niki', artist: 'NIKI', title: 'Buzz World Tour', date: 'SAT, JAN 23 2027 · 8:00 PM', venue: 'SM Mall of Asia Arena · Pasay', doors: 'Doors open 6:00 PM', accent: '#A8D0E6', secondary: '#374785', tag: 'JUST ANNOUNCED', tiers: makeTiers(0),
   },
   {
-    id: 'niki', artist: 'NIKI', title: 'Buzz World Tour', date: 'SAT, JAN 23 2027 · 8:00 PM', venue: 'SM Mall of Asia Arena · Pasay', doors: 'Doors open 6:00 PM', accent: '#3B8BEB', secondary: '#8590AA', tag: 'JUST ANNOUNCED', tiers: makeTiers(0),
+    id: 'benandben', artist: 'BEN&BEN', title: 'The Traveller Across Dimensions', date: 'SUN, FEB 07 2027 · 7:00 PM', venue: 'Araneta Coliseum · Quezon City', doors: 'Doors open 5:30 PM', accent: '#F8E9A1', secondary: '#F76C6C', tag: 'FEW DATES LEFT', tiers: makeTiers(1),
   },
   {
-    id: 'benandben', artist: 'BEN&BEN', title: 'The Traveller Across Dimensions', date: 'SUN, FEB 07 2027 · 7:00 PM', venue: 'Araneta Coliseum · Quezon City', doors: 'Doors open 5:30 PM', accent: '#8590AA', secondary: '#B23850', tag: 'FEW DATES LEFT', tiers: makeTiers(1),
+    id: 'coldplay', artist: 'COLDPLAY', title: 'Live in Manila', date: 'FRI, MAR 19 2027 · 7:30 PM', venue: 'Philippine Arena · Bulacan', doors: 'Doors open 5:00 PM', accent: '#F76C6C', secondary: '#A8D0E6', tag: 'DEMO LISTING', tiers: makeTiers(0),
+  },
+  {
+    id: 'chaseatlantic', artist: 'CHASE ATLANTIC', title: 'Live in Manila', date: 'FRI, APR 09 2027 · 8:00 PM', venue: 'SM Mall of Asia Arena · Pasay', doors: 'Doors open 6:00 PM', accent: '#A8D0E6', secondary: '#F76C6C', tag: 'DEMO LISTING', tiers: makeTiers(2),
+  },
+  {
+    id: 'wave-to-earth', artist: 'wave to earth', title: 'Live in Manila', date: 'SAT, MAY 01 2027 · 7:00 PM', venue: 'Araneta Coliseum · Quezon City', doors: 'Doors open 5:30 PM', accent: '#F8E9A1', secondary: '#A8D0E6', tag: 'DEMO LISTING', tiers: makeTiers(0),
   },
 ]
 
