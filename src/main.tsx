@@ -4,6 +4,8 @@ import App from './App'
 import './styles.css'
 import './palette.css'
 import './ticket.css'
+import './landing.css'
+import './booking.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode><App /></React.StrictMode>,

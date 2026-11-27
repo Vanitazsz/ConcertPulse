@@ -6,8 +6,8 @@
   --palette-night: #24305E;
   --page-night: #151A36;
   --panel: #1D264A;
-  --ink: #F4F1EA;
-  --ink-muted: #A8B5D1;
+  --ink: #F8F6F0;
+  --ink-muted: #C8D2E8;
   --line: #A8D0E640;
   color: var(--ink);
   background: var(--page-night);
@@ -177,6 +177,39 @@ body { color: var(--ink); background: var(--page-night); }
 .secondary-button { color: var(--ink); border-color: #A8D0E650; background: #24305E; }
 .danger-button { color: #151A36; border-color: var(--palette-coral); background: var(--palette-coral); }
 .danger-button:hover { background: #ff8181; }
+
+/* Readability: larger type + stronger contrast on booking screens */
+.eyebrow { font-size: 11px; letter-spacing: .14em; color: #D5DCEC; }
+.progress-sub, .steps li { font-size: 13px; color: #C8D2E8; }
+.main-nav button { font-size: 14px; }
+.brand { font-size: 16px; }
+.brand small { font-size: 9px; color: #B7C3DC; }
+.topbar-center, .profile-chip { font-size: 12px; color: #C8D2E8; }
+.strip-label > span:last-child { font-size: 14px; color: #E2E8F4; line-height: 1.45; }
+.event-info strong { font-size: 13px; color: #F4F1EA; }
+.event-info span { font-size: 11px; color: #C8D2E8; }
+.event-tag { font-size: 8px; }
+.section-heading h1, .reservations-heading h1 { font-size: clamp(28px, 3vw, 38px); }
+.section-heading p, .reservations-heading p { font-size: 15px; color: #C8D2E8; line-height: 1.5; }
+.show-meta { font-size: 12px; color: #D5DCEC; }
+.arena-hud, .telemetry small, .arena-hint, .angle-picker > span { font-size: 10px; color: #D5DCEC; }
+.telemetry b { font-size: 12px; color: #F4F1EA; }
+.camera-toggle button, .angle-picker button { font-size: 11px; }
+.tier-card strong { font-size: 12px; color: #F4F1EA; }
+.tier-price { font-size: 12px; }
+.stock-label, .tier-hint, .tier-sort, .inventory-note { font-size: 11px; color: #C8D2E8; }
+.checkout-show strong, .selected-section strong { font-size: 14px; color: #F8F6F0; }
+.checkout-show span, .quantity-row span, .help-card small { font-size: 12px; color: #C8D2E8; }
+.field-group label, .selected-section > div:nth-child(2) > span, .secure-badge, .edit-section { font-size: 11px; color: #D5DCEC; }
+.input-wrap input { font-size: 14px; }
+.quantity-row strong, .help-card strong, .price-breakdown > div { font-size: 13px; }
+.price-breakdown strong { font-size: 13px; }
+.price-total strong { font-size: 20px; }
+.reserve-button { font-size: 14px; min-height: 48px; }
+.checkout-assurance span, .terms-copy, .field-error, .error-banner { font-size: 12px; }
+.reservation-details h2 { font-size: 18px; }
+.reservation-facts span { font-size: 13px; color: #D5DCEC; }
+.site-footer { font-size: 11px; color: #C8D2E8; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }

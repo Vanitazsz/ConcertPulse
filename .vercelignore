@@ -1,0 +1,8 @@
+node_modules
+dist
+tmp-frames
+.agents
+docs
+src/stadium-copy.mp4
+src/omnya-lab-stadium-blueprint.pdf
+*.tsbuildinfo
